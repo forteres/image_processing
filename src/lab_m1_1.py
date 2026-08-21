@@ -48,7 +48,7 @@ def channel_r(img_path, output_path,*args):
 def grayscale_average(img_path, output_path,*args):
     img = open_image(img_path)
     tempImg = np.copy(img)
-    tempImg = np.mean(tempImg, axis=2).astype(np.uint8)
+    tempImg = np.mean(tempImg[...,:3], axis=2).astype(np.uint8)
     cv.imwrite(output_path, tempImg)
 
 # grayscale_weighted
