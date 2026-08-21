@@ -61,7 +61,7 @@ def grayscale_weighted(img_path, output_path,*args):
     cv.imwrite(output_path, tempImg)
 
 # quantize
-def quantize(img_path, output_path, value):
+def quantize(img_path, output_path, value, *args):
     img = open_image(img_path)
     tempImg = np.copy(img)
 
