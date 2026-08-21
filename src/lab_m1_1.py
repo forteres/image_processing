@@ -68,10 +68,10 @@ def quantize(img_path, output_path, value):
     try:
         levels = int(value)
     except ValueError:
-        raise ValueError("Value must be an integer")
+        raise ValueError("Value (-v) must be an integer")
 
     if levels not in (2, 4, 8, 16):
-        raise ValueError("Value must be in (2, 4, 8, 16)")
+        raise ValueError("Value (-v) must be in (2, 4, 8, 16)")
     
     factor = 255 / (levels - 1)
     tempImg = np.round(tempImg / factor) * factor
