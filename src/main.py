@@ -25,6 +25,7 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--input', type=str,default=os.path.join(img_default_path, 'input', 'donkey.jpg'), help='input path+file')
     parser.add_argument('-o', '--output', type=str,default=os.path.join(img_default_path, 'output', datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + '.jpg'), help='output path+file')
     parser.add_argument('-p', '--operation', type=str,required=True, help='operation to perform', choices=list(operations.keys()))
+    parser.add_argument('-v', '--value', type=str, default='', help='value for operation')
     args = parser.parse_args()
 
-    operations[args.operation](args.input, args.output)
+    operations[args.operation](args.input, args.output, args.value)

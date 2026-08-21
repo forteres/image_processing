@@ -61,6 +61,22 @@ def grayscale_weighted(img_path, output_path,*args):
     cv.imwrite(output_path, tempImg)
 
 # quantize
+def quantize(img_path, output_path, value):
+    img = open_image(img_path)
+    tempImg = np.copy(img)
+
+    try:
+        levels = int(value)
+    except ValueError:
+        raise ValueError("Value must be an integer")
+
+    if levels not in (2, 4, 8, 16):
+        raise ValueError("Value must be in (2, 4, 8, 16)")
+    
+    factor = 255 / (levels - 1)
+    tempImg = np.round(tempImg / factor) * factor
+    tempImg = tempImg.astype(np.uint8)
+    cv.imwrite(output_path, tempImg)
 
 operations = {
         'inspect': inspect,
@@ -69,5 +85,6 @@ operations = {
         'channel_g': channel_g,
         'channel_r': channel_r,
         'grayscale_average': grayscale_average,
-        'grayscale_weighted': grayscale_weighted
+        'grayscale_weighted': grayscale_weighted,
+        'quantize': quantize
     }
