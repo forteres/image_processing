@@ -3,7 +3,7 @@ import cv2 as cv
 
 # helper methods
 def open_image(img_path):
-    img = cv.imread(img_path)
+    img = cv.imread(img_path,cv.IMREAD_UNCHANGED)
     assert img is not None, "file could not be read, check with os.path.exists()"
     return img
 
@@ -11,7 +11,7 @@ def open_image(img_path):
 # inspect
 def inspect(img_path,*args):
     img = open_image(img_path)
-    width,height,channels = img.shape
+    height, width, channels = img.shape
     print(f'width: {width}\nheight: {height}\nchannels: {channels}\npixels: {img.size}\ntype: {img.dtype}')
     for i in range(channels):
         print(f'channel {i} min: {np.min(img[:,:,i])} max: {np.max(img[:,:,i])} mean: {np.mean(img[:,:,i]):.3f}')
@@ -48,7 +48,7 @@ def channel_r(img_path, output_path,*args):
 def grayscale_average(img_path, output_path,*args):
     img = open_image(img_path)
     tempImg = np.copy(img)
-    tempImg = np.mean(tempImg[...,:3], axis=2).astype(np.uint8)
+    tempImg[...,:3] = np.mean(tempImg[...,:3], axis=2).astype(np.uint8)
     cv.imwrite(output_path, tempImg)
 
 # grayscale_weighted
@@ -57,7 +57,7 @@ def grayscale_weighted(img_path, output_path,*args):
     weights = np.array([0.299, 0.587, 0.114])
 
     tempImg = np.copy(img)
-    tempImg = np.dot(tempImg[...,:3], weights).astype(np.uint8)
+    tempImg[...,:3] = np.dot(tempImg[...,:3], weights).astype(np.uint8)
     cv.imwrite(output_path, tempImg)
 
 # quantize
@@ -74,7 +74,7 @@ def quantize(img_path, output_path, value, *args):
         raise ValueError("Value (-v) must be in (2, 4, 8, 16)")
     
     factor = 255 / (levels - 1)
-    tempImg = np.round(tempImg / factor) * factor
+    tempImg[...,:3] = np.round(tempImg[...,:3] / factor) * factor
     tempImg = tempImg.astype(np.uint8)
     cv.imwrite(output_path, tempImg)
 
