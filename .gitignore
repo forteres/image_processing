@@ -1,4 +1,5 @@
 .venv
 venv
-images/output
+images/output/*
+!images/output/.gitkeep
 src/__pycache__
